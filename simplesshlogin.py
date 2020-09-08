@@ -4,6 +4,11 @@ import pexpect
 
 PROMPT = ['#', '>>> ', '> ', '\$ ']
 
+def send_command(offspring, command):
+    offspring.sendline(command)
+    offspring.expect(PROMPT)
+    print(offspring.before)
+
 def connect(user, host, password):
     ssh_newkey = 'Are you sure want to continue connecting'
     connStr = 'ssh ' + user + '0' + host
@@ -24,9 +29,9 @@ def connect(user, host, password):
 
 def main():
     host = input('[+] Your Host :')
-    user = 'msfadmin'
-    password = 'msfadmin'
+    user = input('[+] Your Username :')
+    password = input('[-] Your Password :')
     offspring = connect(user, host, password)
     send_command(offspring, 'cat /etc/shadow | grep root;ps')
 
-main()    
+main()      
